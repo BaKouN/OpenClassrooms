@@ -1,7 +1,7 @@
 console.log('linked!');
 
-// 74d859ca150a0d64898b62eefd0255bc6f7704fa  clé API JCDECAUX
-var mymap = L.map('mapid').setView([45.76, 4.87], 12.5); // variable les réglages de la map
+// https://api.jcdecaux.com/vls/v1/stations?contract=lyon&apiKey=74d859ca150a0d64898b62eefd0255bc6f7704fa
+var mymap = L.map('mapid').setView([45.76, 4.86], 12.5); // variable les réglages de la map
 
 L.tileLayer( // ajout du fond
     'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiYmFrb3VuIiwiYSI6ImNqdmNibnpqNDAxbDkzeW8zZnhtcmh0bGoifQ.Vj39v0WupOBNhy5r22UXyA', {
@@ -15,9 +15,9 @@ var velovIcon = L.Icon.extend({
         shadowUrl: '../images/ombre.png',
         iconSize:     [30, 30],
         shadowSize:   [30, 30],
-        iconAnchor:   [15, 30],
-        shadowAnchor: [13, 28],
-        popupAnchor:  [-3, -76]
+        iconAnchor:   [15, 28],
+        shadowAnchor: [13, 26],
+        popupAnchor:  [0, -35]
     }
 });
 
@@ -25,12 +25,19 @@ var greenIcon = new velovIcon({iconUrl: '../images/velovVert.png'}),
     redIcon = new velovIcon({iconUrl: '../images/velovRouge.png'}),
     orangeIcon = new velovIcon({iconUrl: '../images/velovOrange.png'});
 
-var marker = L.marker([45.75, 4.85]).addTo(mymap);
-var marker2 = L.marker([45.76, 4.84]).addTo(mymap);
-var marker3 = L.marker([45.77, 4.83], {icon: greenIcon}).addTo(mymap);
-var marker4 = L.marker([45.74, 4.86], {icon: redIcon}).addTo(mymap);
-var marker5 = L.marker([45.78, 4.87], {icon: orangeIcon}).addTo(mymap);
-
-marker.bindPopup("<b>Reserver en deux clics</b><br>Cliquer ici!").openPopup();
-
-marker.id = "marker";
+    ajaxGet("https://api.jcdecaux.com/vls/v1/stations?contract=lyon&apiKey=74d859ca150a0d64898b62eefd0255bc6f7704fa", function (reponse){
+        var listevelos = JSON.parse(reponse);
+        for (velo of listevelos)
+        {
+            let stationIcon = L.marker([velo.position.lat, velo.position.lng], {icon:redIcon}).addTo(mymap);
+            let nb_velo = velo.available_bikes;
+            let nb_places = velo.bike_stands;
+            let nom_velo = velo.name.split('- ');
+            let reservationElt = document.getElementById('reservation');
+            let infosElt = document.getElementById('infos');
+            stationIcon.addEventListener("click", function(e){
+                infosElt.textContent = `station : ${nom_velo[1]}.
+                Il reste ${nb_velo} vélos sur les ${nb_places} places disponibles`;
+            })
+        }
+    });

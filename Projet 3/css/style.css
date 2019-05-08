@@ -1,8 +1,28 @@
-h1 {
+h1 
+{
     text-align: center;
 }
 
-#mapid {
-    height: 500px;
+#appweb
+{
+    display:flex;
+}
 
+#mapid 
+{
+    height: 500px;
+    width:66%;
+    border:5px black solid;
+    border-radius:10px;
+}
+
+#reservation
+{
+    width: 33%;
+    border:5px black solid;
+    border-radius:10px;
+}
+
+#reservation *{
+    text-align: center;
 }
