@@ -26,3 +26,7 @@ h1
 #reservation *{
     text-align: center;
 }
+
+#infos{
+    white-space: pre-line;
+}

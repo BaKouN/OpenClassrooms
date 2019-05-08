@@ -36,7 +36,7 @@ var greenIcon = new velovIcon({iconUrl: '../images/velovVert.png'}),
             let reservationElt = document.getElementById('reservation');
             let infosElt = document.getElementById('infos');
             stationIcon.addEventListener("click", function(e){
-                infosElt.textContent = `station : ${nom_velo[1]}.
+                infosElt.textContent = `station : ${nom_velo[1]}. \r\n
                 Il reste ${nb_velo} vélos sur les ${nb_places} places disponibles`;
             })
         }
