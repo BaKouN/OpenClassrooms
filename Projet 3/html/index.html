@@ -16,19 +16,37 @@
 			integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
 			crossorigin=""
 		></script>
+		<link rel="stylesheet" href="../css/MarkerCluster.css" type="text/css" />
+		<link rel="stylesheet" href="../css/MarkerCluster.Default.css" type="text/css" />
+		<script src="../js/leaflet.markercluster.js"></script>
 	</head>
 
 	<body>
 		<h1>Carte intéractive des Vélo'v de Lyon</h1>
-
+		<div id="bloctest" height ="1000px"></div>
         <div id="appweb">
             <div id="mapid"></div>
             <div id="reservation">
                 <h2>Réservation de vélo</h2>
-                <p id="infos"></p>
-                <form>
+				<form action="" method="get" class="hidden">
+						<p id="infos"></p>
+						<div>
+						  <label for="nom">Nom : </label>
+						  <input type="text" name="nom" id="nom" required>
+						</div>
+						<div>
+							<label for="prenom">Prenom : </label>
+							<input type="text" name="prenom" id="prenom" required>
+						</div>
+						<div>
+						  <input type="submit" value="Reserver">
+						</div>
+						<div>
+							<canvas id="canvas">
 
-                </form>
+							</canvas>
+						</div>
+					  </form>
             </div>
         </div>
 		<script src="../js/ajaxGet.js"></script>

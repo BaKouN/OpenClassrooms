@@ -25,19 +25,51 @@ var greenIcon = new velovIcon({iconUrl: '../images/velovVert.png'}),
     redIcon = new velovIcon({iconUrl: '../images/velovRouge.png'}),
     orangeIcon = new velovIcon({iconUrl: '../images/velovOrange.png'});
 
+let cluster = L.markerClusterGroup();
+
     ajaxGet("https://api.jcdecaux.com/vls/v1/stations?contract=lyon&apiKey=74d859ca150a0d64898b62eefd0255bc6f7704fa", function (reponse){
         var listevelos = JSON.parse(reponse);
-        for (velo of listevelos)
+        for (let velo of listevelos)
         {
-            let stationIcon = L.marker([velo.position.lat, velo.position.lng], {icon:redIcon}).addTo(mymap);
-            let nb_velo = velo.available_bikes;
-            let nb_places = velo.bike_stands;
-            let nom_velo = velo.name.split('- ');
-            let reservationElt = document.getElementById('reservation');
-            let infosElt = document.getElementById('infos');
-            stationIcon.addEventListener("click", function(e){
-                infosElt.textContent = `station : ${nom_velo[1]}. \r\n
-                Il reste ${nb_velo} vélos sur les ${nb_places} places disponibles`;
+            let stationIcon = L.marker([velo.position.lat, velo.position.lng], {icon:redIcon}); // Création des marqueurs
+            cluster.addLayer(stationIcon); // ajout au plugin MarkerCluster
+
+            let formElt = document.querySelector('form'); //  Séléction des Elts à travers le DOM
+            let infosElt = document.getElementById('infos'); // *************
+
+            stationIcon.addEventListener("click", function(e){ // Fonction affichant info + formulaire réservation
+                formElt.classList.remove('hidden');
+                infosElt.textContent = `station : ${velo.name.split('- ')[1]} \r\n
+                adresse : ${velo.address} \r\n
+                Il reste ${velo.available_bikes} vélos sur les ${velo.bike_stands} places disponibles`;
             })
+
+            formElt.addEventListener("submit",function(e){
+                e.preventDefault();
+            });
         }
     });
+
+    mymap.addLayer(cluster); // Ajout des clusters à la map;
+
+    let canvas = document.getElementById('canvas');
+    let ctx = canvas.getContext('2d')
+    let mousePressed = false;
+
+    document.addEventListener("mousedown", function(e){
+        mousePressed = true ;
+    }, false);
+
+    document.addEventListener("mouseup", function(e){
+        mousePressed = false;
+    }, false);
+
+    document.addEventListener("mousemove", function(e){
+        if (mousePressed === true);
+        {
+            let rect = canvas.getBoundingClientRect();
+            console.log(mousePressed);
+            ctx.fillRect((e.clientX - rect.left),(e.clientY - rect.top), 3,3);
+            ctx.fillStyle = "#000000";
+        }
+    }, false);
