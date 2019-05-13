@@ -1,5 +1,3 @@
-console.log('linked!');
-
 // https://api.jcdecaux.com/vls/v1/stations?contract=lyon&apiKey=74d859ca150a0d64898b62eefd0255bc6f7704fa
 var mymap = L.map('mapid').setView([45.76, 4.86], 12.5); // variable les réglages de la map
 
@@ -29,47 +27,38 @@ let cluster = L.markerClusterGroup();
 
     ajaxGet("https://api.jcdecaux.com/vls/v1/stations?contract=lyon&apiKey=74d859ca150a0d64898b62eefd0255bc6f7704fa", function (reponse){
         var listevelos = JSON.parse(reponse);
+        let formElt = document.querySelector('form'); //  Séléction des Elts à travers le DOM
+        let infosElt = document.getElementById('infos'); // *************
+
         for (let velo of listevelos)
         {
             let stationIcon = L.marker([velo.position.lat, velo.position.lng], {icon:redIcon}); // Création des marqueurs
             cluster.addLayer(stationIcon); // ajout au plugin MarkerCluster
-
-            let formElt = document.querySelector('form'); //  Séléction des Elts à travers le DOM
-            let infosElt = document.getElementById('infos'); // *************
 
             stationIcon.addEventListener("click", function(e){ // Fonction affichant info + formulaire réservation
                 formElt.classList.remove('hidden');
                 infosElt.textContent = `station : ${velo.name.split('- ')[1]} \r\n
                 adresse : ${velo.address} \r\n
                 Il reste ${velo.available_bikes} vélos sur les ${velo.bike_stands} places disponibles`;
-            })
+                
+                formElt.addEventListener("submit",function(e){
+                    e.preventDefault();
+                    if (velo.available_bikes > 0 && velo.status === "OPEN") {
+                        console.log(velo.available_bikes);
+                        document.getElementById('signatureDiv').classList.remove('hidden');
+                    }
+                    else if (velo.available_bikes === 0) {
+                        document.getElementById('erreurStation').innerHTML= 'Station vide ! Vous ne pouvez pas réserver de vélo !';
+                    }
+                    else if (velo.status !== "OPEN") {
+                        document.getElementById('erreurStation').innerHTML= 'Station indisponible ! Veuillez en choisir une autre !';
+                    }
+                });
 
-            formElt.addEventListener("submit",function(e){
-                e.preventDefault();
             });
+
+
         }
     });
 
     mymap.addLayer(cluster); // Ajout des clusters à la map;
-
-    let canvas = document.getElementById('canvas');
-    let ctx = canvas.getContext('2d')
-    let mousePressed = false;
-
-    document.addEventListener("mousedown", function(e){
-        mousePressed = true ;
-    }, false);
-
-    document.addEventListener("mouseup", function(e){
-        mousePressed = false;
-    }, false);
-
-    document.addEventListener("mousemove", function(e){
-        if (mousePressed === true);
-        {
-            let rect = canvas.getBoundingClientRect();
-            console.log(mousePressed);
-            ctx.fillRect((e.clientX - rect.left),(e.clientY - rect.top), 3,3);
-            ctx.fillStyle = "#000000";
-        }
-    }, false);

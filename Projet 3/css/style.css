@@ -38,15 +38,5 @@ h1
 
 #canvas
 {
-    width:66%;
-    height:100px;
     border: 2px red solid;
-}
-
-#bloctest
-{
-    height: 1000px;
-    display:block;
-    width:100%;
-    border: 2px green dashed;
 }
