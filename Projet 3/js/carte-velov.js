@@ -24,6 +24,7 @@ var greenIcon = new velovIcon({iconUrl: '../images/velovVert.png'}),
     orangeIcon = new velovIcon({iconUrl: '../images/velovOrange.png'});
 
 let cluster = L.markerClusterGroup();
+let selectedStation;
 
     ajaxGet("https://api.jcdecaux.com/vls/v1/stations?contract=lyon&apiKey=74d859ca150a0d64898b62eefd0255bc6f7704fa", function (reponse){
         var listevelos = JSON.parse(reponse);
@@ -36,29 +37,37 @@ let cluster = L.markerClusterGroup();
             cluster.addLayer(stationIcon); // ajout au plugin MarkerCluster
 
             stationIcon.addEventListener("click", function(e){ // Fonction affichant info + formulaire réservation
+                selectedStation = velo;
+                document.getElementById('erreurStation').innerHTML= '';
                 formElt.classList.remove('hidden');
                 infosElt.textContent = `station : ${velo.name.split('- ')[1]} \r\n
                 adresse : ${velo.address} \r\n
                 Il reste ${velo.available_bikes} vélos sur les ${velo.bike_stands} places disponibles`;
-                
-                formElt.addEventListener("submit",function(e){
-                    e.preventDefault();
-                    if (velo.available_bikes > 0 && velo.status === "OPEN") {
-                        console.log(velo.available_bikes);
-                        document.getElementById('signatureDiv').classList.remove('hidden');
-                    }
-                    else if (velo.available_bikes === 0) {
-                        document.getElementById('erreurStation').innerHTML= 'Station vide ! Vous ne pouvez pas réserver de vélo !';
-                    }
-                    else if (velo.status !== "OPEN") {
-                        document.getElementById('erreurStation').innerHTML= 'Station indisponible ! Veuillez en choisir une autre !';
-                    }
-                });
 
+                document.getElementById('signatureDiv').classList.add('hidden');
             });
 
+            formElt.removeEventListener("submit", testStation);
+            var testStation = function(e)
+            {
+                console.log("test");
+                e.preventDefault();
+                if (selectedStation.available_bikes > 0 && selectedStation.status === "OPEN") {
+                    document.getElementById('erreurStation').innerHTML= '';
+                    document.getElementById('signatureDiv').classList.remove('hidden');
+                }
+                else if (selectedStation.available_bikes === 0) {
+                    document.getElementById('erreurStation').innerHTML= 'Station vide ! Vous ne pouvez pas réserver de vélo !';
+                }
+                else if (selectedStation.status !== "OPEN") {
+                    document.getElementById('erreurStation').innerHTML= 'Station indisponible ! Veuillez en choisir une autre !';
+                }
+            }
+            formElt.addEventListener("submit",testStation);
 
         }
     });
+
+
 
     mymap.addLayer(cluster); // Ajout des clusters à la map;
