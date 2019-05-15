@@ -1,42 +1,46 @@
-h1 
-{
-    text-align: center;
+h1 {
+	text-align: center;
 }
 
-#appweb
-{
-    display:flex;
+#appweb {
+	display: flex;
 }
 
-#mapid 
-{
-    height: 500px;
-    width:66%;
-    border:5px black solid;
-    border-radius:10px;
+#mapid {
+	height: 500px;
+	width: 66%;
+	border: 5px black solid;
+	border-radius: 10px;
 }
 
-#reservation
-{
-    width: 33%;
-    border:5px black solid;
-    border-radius:10px;
+#reservation {
+	width: 33%;
+	border: 5px black solid;
+	border-radius: 10px;
 }
 
-#reservation *{
-    text-align: center;
-}
-
-#infos{
+#infosReservation {
+	border: 5px black solid;
+	border-radius: 10px;
+	height: 100px;
+    width: 99%;
     white-space: pre-line;
+    text-align: center;
 }
 
-.hidden
-{
-    display:none;
+#reservation * {
+	text-align: center;
 }
 
-#canvas
-{
-    border: 2px red solid;
+#infos {
+	white-space: pre-line;
+}
+
+
+.hidden {
+	display: none;
+}
+
+#canvas {
+	border: 2px red solid;
 }

@@ -2,7 +2,7 @@
     var canvas = document.getElementById('canvas');
     let ctx = canvas.getContext('2d');
     let mousePressed = false;
-    let signTest = 0;
+    var signTest = 0;
 
     canvas.addEventListener("mousedown" , function(e) {mousePressed = !mousePressed});
 

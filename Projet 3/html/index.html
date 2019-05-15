@@ -23,32 +23,36 @@
 
 	<body>
 		<h1>Carte intéractive des Vélo'v de Lyon</h1>
-        <div id="appweb">
-            <div id="mapid"></div>
-            <div id="reservation">
-                <h2>Réservation de vélo</h2>
-				<form action="" method="get" class="hidden">
+      <div id="appweb">
+        <div id="mapid"></div>
+        <div id="reservation">
+          <h2>Réservation de vélo</h2>
+					<form action="" method="get" class="hidden">
 						<p id="infos"></p>
-						<div>
-						  <label for="nom">Nom : </label>
-						  <input type="text" name="nom" id="nom" required>
-						</div>
 						<div>
 							<label for="prenom">Prenom : </label>
 							<input type="text" name="prenom" id="prenom" required>
 						</div>
 						<div>
-						  <input type="submit" value="Reserver">
+							<label for="nom">Nom : </label>
+							<input type="text" name="nom" id="nom" required>
+						</div>
+						<div>
+							<input type="submit" id="submitBoutton" value="Reserver">
 						</div>
 						<div id = "signatureDiv" class="hidden">
 							<canvas id="canvas" width="250" height="100">
 							</canvas> </br>
 							<button type="button" id="resetCanvas">Effacer</button>
+							<button type="button" id="reserverBtn">Confirmer la réservation</button>
 						</div>
-						<p id="erreurStation"></p>
-					  </form>
-            </div>
-		</div>
+						<p id="erreur"></p>
+						</form>
+          </div>
+				</div>
+				<div id="infosReservation">
+
+				</div>
 		<script src="../js/canvas.js"></script>
 		<script src="../js/ajaxGet.js"></script>
 		<script src="../js/carte-velov.js"></script>
