@@ -23,36 +23,50 @@
 
 	<body>
 		<h1>Carte intéractive des Vélo'v de Lyon</h1>
-      <div id="appweb">
-        <div id="mapid"></div>
-        <div id="reservation">
-          <h2>Réservation de vélo</h2>
-					<form action="" method="get" class="hidden">
-						<p id="infos"></p>
-						<div>
-							<label for="prenom">Prenom : </label>
-							<input type="text" name="prenom" id="prenom" required>
-						</div>
-						<div>
-							<label for="nom">Nom : </label>
-							<input type="text" name="nom" id="nom" required>
-						</div>
-						<div>
-							<input type="submit" id="submitBoutton" value="Reserver">
-						</div>
-						<div id = "signatureDiv" class="hidden">
-							<canvas id="canvas" width="250" height="100">
-							</canvas> </br>
-							<button type="button" id="resetCanvas">Effacer</button>
-							<button type="button" id="reserverBtn">Confirmer la réservation</button>
-						</div>
-						<p id="erreur"></p>
-						</form>
-          </div>
-				</div>
-				<div id="infosReservation">
-
-				</div>
+		<div class="slideshow-container">
+			<div class="mySlides fade">
+				<img src="../images/img1.jpg" style="width:100%">
+			</div>
+			<div class="mySlides fade">
+				<img src="../images/img2.png" style="width:100%">
+			</div>
+			<div class="mySlides fade">
+				<img src="../images/img3.png" style="width:100%">
+			</div>
+			<div class="mySlides fade">
+					<img src="../images/img4.png" style="width:100%">
+			</div>
+			<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+			<a class="next" onclick="plusSlides(1)">&#10095;</a>
+		</div>
+    	<div id="appweb">
+			<div id="mapid"></div>
+			<div id="reservation">
+				<h2>Réservation de vélo</h2>
+				<form action="" method="get" class="hidden">
+					<p id="infos"></p>
+					<div>
+						<label for="prenom">Prenom : </label>
+						<input type="text" name="prenom" id="prenom" required>
+					</div>
+					<div>
+						<label for="nom">Nom : </label>
+						<input type="text" name="nom" id="nom" required>
+					</div>
+					<div>
+						<input type="submit" id="submitBoutton" value="Reserver">
+					</div>
+					<div id = "signatureDiv" class="hidden">
+						<canvas id="canvas" width="250" height="100">
+						</canvas> </br>
+						<button type="button" id="resetCanvas">Effacer</button>
+						<button type="button" id="reserverBtn">Confirmer la réservation</button>
+					</div>
+					<p id="erreur"></p>
+				</form>
+			</div>
+		</div>
+		<div id="infosReservation"> </div>
 		<script src="../js/canvas.js"></script>
 		<script src="../js/ajaxGet.js"></script>
 		<script src="../js/carte-velov.js"></script>
