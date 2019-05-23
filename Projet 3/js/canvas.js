@@ -24,7 +24,9 @@
 
     let resetCanvas = document.getElementById('resetCanvas');
 
-    resetCanvas.addEventListener('click', function(e){
+    function clearCanvas(){
         signTest = 0;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-    });
+    }
+
+    resetCanvas.addEventListener('click', clearCanvas);

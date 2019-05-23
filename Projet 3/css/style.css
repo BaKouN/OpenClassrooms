@@ -1,82 +1,119 @@
-h1 {
-	text-align: center;
+h1,
+h2 {
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+}
+
+body {
+  font-family: 'Raleway', sans-serif;
+  width:auto !important;
+}
+
+#infoAndResa
+{
+  width:
+}
+
+.navbar {
+  justify-content: space-between;
+}
+
+.brand-bg {
+  background: #eaeaea;
+}
+
+.brand-font {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.bottom-gold {
+  border-bottom: solid 2px #BC8B2D;
 }
 
 #appweb {
-	display: flex;
+  display: flex;
+  flex-flow: row-reverse nowrap;
 }
 
 #mapid {
-	height: 500px;
-	width: 66%;
-	border: 5px black solid;
-	border-radius: 10px;
+  height: 800px;
+  width: 100%;
+  border: 3px #BC8B2D solid;
+  border-radius: 2px;
+  transition : all 1s ease;
 }
 
 #reservation {
-	width: 33%;
-	border: 5px black solid;
-	border-radius: 10px;
+  height: 615px;
+  border: 3px #BC8B2D solid;
+  border-radius: 2px;
 }
 
 #infosReservation {
-	border: 5px black solid;
-	border-radius: 10px;
-	height: 100px;
-    width: 99%;
-    white-space: pre-line;
-    text-align: center;
+  border: 3px #BC8B2D solid;
+  border-radius: 2px;
+  height: 160px;
+  white-space: pre-line;
+  text-align: center;
 }
 
 #reservation * {
-	text-align: center;
+  text-align: left;
+}
+
+#reservation h2 {
+  text-align: center;
+  border-bottom: #BC8B2D 2px solid;
+  padding: 10px 0px;
+  margin-bottom: 30px
 }
 
 #infos {
-	white-space: pre-line;
+  white-space: pre-line;
 }
 
 
 .hidden {
-	display: none;
+  display: none;
 }
 
 #canvas {
-	border: 2px red solid;
+  border: 2px red solid;
 }
 
-.slideshow-container * {
-	box-sizing:border-box 
+.diapo-container * {
+  box-sizing: border-box
 }
 
 /* Slideshow container */
-.slideshow-container {
-  width:75%;
-  margin:auto;
+.diapo-container {
+  width: 75%;
+  max-width: 960px;
+  margin: auto;
   position: relative;
   overflow: hidden;
 }
 
 /* Hide the images by default */
-.mySlides {
+.diapo {
   display: none;
 }
 
-.mySlides img
-{
+.diapo img {
   max-width: 100%;
   max-height: 100%;
 }
 
 /* Next & previous buttons */
-.prev, .next {
+#prev,
+#next {
   cursor: pointer;
   position: absolute;
   top: 50%;
   width: auto;
   margin-top: -22px;
   padding: 16px;
-  color:white;
+  color: white;
   font-weight: bold;
   font-size: 18px;
   transition: 0.6s ease;
@@ -85,16 +122,17 @@ h1 {
   background-color: rgba(158, 158, 158, 0.8);
 }
 
-.next {
+#next {
   right: 0;
   border-radius: 3px 0 0 3px;
 }
 
-.prev:hover, .next:hover {
-  background-color: rgba(0,0,0,0.8);
+#prev:hover,
+#next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
-.fade {
+.fade-anim {
   -webkit-animation-name: fade;
   -webkit-animation-duration: 1.5s;
   animation-name: fade;
@@ -102,6 +140,11 @@ h1 {
 }
 
 @keyframes fade {
-  from {opacity: .4} 
-  to {opacity: 1}
+  from {
+    opacity: .4
+  }
+
+  to {
+    opacity: 1
+  }
 }
