@@ -143,7 +143,7 @@ function reservation(){
 					let formattedTimerSecondes = timerSecondes.toLocaleString(undefined, {minimumIntegerDigits: 2});
 	
 					document.getElementById("erreur").innerHTML = "";
-					document.getElementById("infosReservation").innerHTML = `<p class="mt-2 mx-auto">Votre vélo à bien été réservé au nom de <b> ${nomUser} ${prenomUser} </b> à l'adresse suivante : \r\n
+					document.getElementById("infosReservation").innerHTML = `<p class="mt-3 mx-auto">Votre vélo à bien été réservé au nom de <b> ${nomUser} ${prenomUser} </b> à l'adresse suivante : \r\n
 							<i>${selectedStation.address}.</i> Il restera disponible pendant encore <b><span id="minuteur">${timerMinutes}:${formattedTimerSecondes}</span></b> minutes.</p>`;
 					
 					isReserved = true;
@@ -158,11 +158,28 @@ function reservation(){
 
 var slideIndex = 1;
 showSlides(slideIndex);
+let play = true;
+let carousel = setInterval(function() {plusSlides(1);}, 5000);
+let playPauseBtn = document.getElementById("playPause");
+
+
+playPauseBtn.addEventListener("click", function(e){
+  play = !play;
+  if(play === false){
+    clearInterval(carousel);
+    playPauseBtn.classList.remove("fa-play");
+    playPauseBtn.classList.add("fa-pause");
+  }
+  else if (play === true)
+  {
+    playPauseBtn.classList.remove("fa-pause");
+    playPauseBtn.classList.add("fa-play");
+    carousel = setInterval(function() {plusSlides(1);}, 5000);
+  }
+});
 
 function plusSlides(n) {
-	// if (play = true){
 		showSlides((slideIndex += n));
-	// }
 }
 
 document.addEventListener("keydown", function(e) {
@@ -195,5 +212,6 @@ function showSlides(n) {
   slides[slideIndex - 1].style.display = "block";
 }
 
-setInterval(function() {plusSlides(1);}, 5000);
+
+
 }

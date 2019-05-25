@@ -32,27 +32,28 @@ body {
 
 #appweb {
   display: flex;
-  flex-flow: row-reverse nowrap;
 }
 
 #mapid {
-  height: 800px;
-  width: 100%;
-  border: 3px #BC8B2D solid;
+  height: 600px;
+  border: 1px #BC8B2D solid;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25);
   border-radius: 2px;
   transition : all 1s ease;
 }
 
 #reservation {
-  height: 615px;
-  border: 3px #BC8B2D solid;
+  min-height: 500px;
+  border: 1px #BC8B2D solid;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25);
   border-radius: 2px;
 }
 
 #infosReservation {
-  border: 3px #BC8B2D solid;
+  border: 1px #BC8B2D solid;
   border-radius: 2px;
-  height: 160px;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25);
+  height: 100px;
   white-space: pre-line;
   text-align: center;
 }
@@ -62,6 +63,7 @@ body {
 }
 
 #reservation h2 {
+  font-size: 2rem;
   text-align: center;
   border-bottom: #BC8B2D 2px solid;
   padding: 10px 0px;
@@ -77,15 +79,20 @@ body {
   display: none;
 }
 
+#signatureDiv
+{
+  text-align: center;
+}
+
 #canvas {
-  border: 2px red solid;
+  border: 1px #BC8B2D solid;
+  box-shadow: 0 7px 14px rgba(0,0,0,0.25);
 }
 
 .diapo-container * {
   box-sizing: border-box
 }
 
-/* Slideshow container */
 .diapo-container {
   width: 75%;
   max-width: 960px;
@@ -94,7 +101,6 @@ body {
   overflow: hidden;
 }
 
-/* Hide the images by default */
 .diapo {
   display: none;
 }
@@ -104,7 +110,6 @@ body {
   max-height: 100%;
 }
 
-/* Next & previous buttons */
 #prev,
 #next {
   cursor: pointer;
@@ -127,14 +132,29 @@ body {
   border-radius: 3px 0 0 3px;
 }
 
+#playPause
+{
+  cursor: pointer;
+  position: absolute;
+  top: 10.5%;
+  left:6%;
+  width: auto;
+  padding: 10px;
+  color: white;
+  font-weight: bold;
+  font-size: 17px;
+  transition: 0.6s ease;
+  border-radius:50%;
+  background-color: rgba(158, 158, 158, 0.8);
+}
+
 #prev:hover,
-#next:hover {
+#next:hover,
+#playPause:hover {
   background-color: rgba(0, 0, 0, 0.8);
 }
 
 .fade-anim {
-  -webkit-animation-name: fade;
-  -webkit-animation-duration: 1.5s;
   animation-name: fade;
   animation-duration: 1.5s;
 }

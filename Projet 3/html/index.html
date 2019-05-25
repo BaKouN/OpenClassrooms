@@ -65,7 +65,7 @@
 			</li>
 		</ul>
 	</nav>
-	<div>
+	<div class="container-fluid">
 		<div class="diapo-container mb-5">
 			<div class="diapo fade-anim">
 				<img src="../images/Diapositive1.PNG">
@@ -84,45 +84,44 @@
 			</div>
 			<i class="fas fa-caret-left" onclick="plusSlides(-1)" id="prev"></i>
 			<i class="fas fa-caret-right" onclick="plusSlides(1)" id="next"></i>
-			<a class="playpause" onclick="playpause()"></a>
+			<i id="playPause" class="fas fa-play" onclick="playpause()"></i>
 		</div>
-		<div id="appweb" class="justify-content-around mb-3">
-			<div id="mapid" class=""></div>
-			<div id="infoAndResa" class="">
-				<div id="reservation" class="">
-					<h2>Réservation de vélo</h2>
-					<form action="" method="get" class="hidden">
-						<p id="infos"></p>
-						<div class="input-group mb-1">
-							<div class="input-group-prepend">
-								<span class="input-group-text" id="inputGroup-sizing-default">Prenom</span>
-							</div>
-							<input type="text" class="form-control" id="prenom" required>
+		<div id="appweb" class="row justify-content-around mb-3 mx-3">
+			<div id="mapid" class="col-7"></div>
+			<div id="reservation" class="col-4">
+				<h2>Réservation de vélo</h2>
+				<form action="" method="get" class="hidden">
+					<p id="infos"></p>
+					<div class="input-group mb-1">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="inputGroup-sizing-default">Prenom</span>
 						</div>
-						<div class="input-group mb-1">
-							<div class="input-group-prepend">
-								<span class="input-group-text" id="inputGroup-sizing-default">Nom</span>
-							</div>
-							<input type="text" class="form-control" id="nom" required>
+						<input type="text" class="form-control" id="prenom" required>
+					</div>
+					<div class="input-group mb-1">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="inputGroup-sizing-default">Nom</span>
 						</div>
-
-						<div class="clearfix">
-							<input type="submit" id="submitBoutton" class="btn btn-primary mb-2 float-right"
-								value="Reserver">
-						</div>
-
-						<div id="signatureDiv" class="hidden">
-							<canvas id="canvas" width="250" height="100">
-							</canvas> </br>
-							<button type="button" class="btn btn-secondary mb-2" id="resetCanvas">Effacer</button>
-							<button type="button" class="btn btn-primary mb-2" id="reserverBtn"
-								data-target="#avertissement">Confirmer la réservation</button>
-						</div>
-						<div class="alert alert-danger text-center hidden" role="alert" id="erreur"></div>
-					</form>
-				</div>
-				<div id="infosReservation" class=""></div>
+						<input type="text" class="form-control" id="nom" required>
+					</div>
+		
+					<div class="clearfix">
+						<input type="submit" id="submitBoutton" class="btn btn-primary mb-2 float-right" value="Reserver">
+					</div>
+		
+					<div id="signatureDiv" class="hidden mx-auto">
+						<canvas id="canvas" width="250" height="100">
+						</canvas> </br>
+						<button type="button" class="btn btn-secondary mb-2" id="resetCanvas">Effacer</button>
+						<button type="button" class="btn btn-primary mb-2" id="reserverBtn"
+							data-target="#avertissement">Confirmer la réservation</button>
+					</div>
+					<div class="alert alert-danger text-center hidden" role="alert" id="erreur"></div>
+				</form>
 			</div>
+		</div>
+		<div class="row justify-content-around">
+			<div id="infosReservation" class="col-11"></div>
 		</div>
 
 	</div>
