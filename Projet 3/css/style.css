@@ -14,6 +14,7 @@ body {
   width:
 }
 
+
 .navbar {
   justify-content: space-between;
 }
@@ -31,7 +32,11 @@ body {
 }
 
 #appweb {
-  display: flex;
+  display:flex;
+  justify-content:space-between;
+  flex-flow: row nowrap;
+  width:100%;
+  overflow-x:hidden;
 }
 
 #mapid {
@@ -39,11 +44,14 @@ body {
   border: 1px #BC8B2D solid;
   box-shadow: 0 14px 28px rgba(0,0,0,0.25);
   border-radius: 2px;
-  transition : all 1s ease;
+  transition : all 1.5s ease;
+  flex:0 0 100%;
+  margin-right:50px;
 }
 
 #reservation {
   min-height: 500px;
+  flex:0 0 30%;
   border: 1px #BC8B2D solid;
   box-shadow: 0 14px 28px rgba(0,0,0,0.25);
   border-radius: 2px;

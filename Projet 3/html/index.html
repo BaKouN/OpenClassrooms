@@ -66,7 +66,7 @@
 		</ul>
 	</nav>
 	<div class="container-fluid">
-		<div class="diapo-container mb-5">
+		<div id="diapoContainer" class="diapo-container mb-5">
 			<div class="diapo fade-anim">
 				<img src="../images/Diapositive1.PNG">
 			</div>
@@ -82,13 +82,13 @@
 			<div class="diapo fade-anim">
 				<img src="../images/Diapositive5.PNG">
 			</div>
-			<i class="fas fa-caret-left" onclick="plusSlides(-1)" id="prev"></i>
-			<i class="fas fa-caret-right" onclick="plusSlides(1)" id="next"></i>
-			<i id="playPause" class="fas fa-play" onclick="playpause()"></i>
+			<i class="fas fa-caret-left" id="prev"></i>
+			<i class="fas fa-caret-right" id="next"></i>
+			<i id="playPause" class="fas fa-play"></i>
 		</div>
-		<div id="appweb" class="row justify-content-around mb-3 mx-3">
-			<div id="mapid" class="col-7"></div>
-			<div id="reservation" class="col-4">
+		<div id="appweb" class="mb-3">
+			<div id="mapid" class=""></div>
+			<div id="reservation" class="px-2">
 				<h2>Réservation de vélo</h2>
 				<form action="" method="get" class="hidden">
 					<p id="infos"></p>
@@ -121,7 +121,7 @@
 			</div>
 		</div>
 		<div class="row justify-content-around">
-			<div id="infosReservation" class="col-11"></div>
+			<div id="infosReservation" class="col-11 mb-2"></div>
 		</div>
 
 	</div>
