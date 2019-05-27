@@ -55,15 +55,37 @@ body {
   border: 1px #BC8B2D solid;
   box-shadow: 0 14px 28px rgba(0,0,0,0.25);
   border-radius: 2px;
+  position:relative;
 }
 
-#infosReservation {
+#closeResa {
+  position:absolute;
+  top: 15px;
+  right: 15px;
+  font-weight: bold;
+  font-size: 20px;
+  cursor:pointer;
+  color:#BC8B2D;
+  text-shadow: 0 14px 28px rgba(0,0,0,0.25);
+}
+
+#infosReservationContainer {
+  display:none;
+  flex-flow:column;
   border: 1px #BC8B2D solid;
   border-radius: 2px;
   box-shadow: 0 14px 28px rgba(0,0,0,0.25);
-  height: 100px;
+  min-height: 100px;
   white-space: pre-line;
   text-align: center;
+}
+
+
+#cancelBtn
+{
+  height:fit-content;
+  width:fit-content;
+  margin:auto
 }
 
 #reservation * {
@@ -84,7 +106,11 @@ body {
 
 
 .hidden {
-  display: none;
+  display: none !important;
+}
+
+.flex {
+  display:flex !important;
 }
 
 #signatureDiv

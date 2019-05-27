@@ -1,3 +1,7 @@
+localStorage.setItem("name","BAKHOUCHE");
+localStorage.setItem("firstName", "HAROUN");
+console.log(localStorage);
+
 {/////////////////////////////////////////////////// PARAMETRES DE L'API LEAFLET ///////////////////////////////////////////////////
 
 // https://api.jcdecaux.com/vls/v1/stations?contract=lyon&apiKey=74d859ca150a0d64898b62eefd0255bc6f7704fa
@@ -9,7 +13,7 @@ class customMap {
       // ajout du fond
       "https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiYmFrb3VuIiwiYSI6ImNqdmNibnpqNDAxbDkzeW8zZnhtcmh0bGoifQ.Vj39v0WupOBNhy5r22UXyA",
       {
-        maxZoom: 16.5,
+        maxZoom: 16,
         id: "mapbox.streets"
       }
     ).addTo(this.mymap);
@@ -31,7 +35,6 @@ class customMap {
     this.selectedStation;
     self = this;
     this.zoom=this.mymap.getZoom();
-    console.log(this.zoom);
     ajaxGet(
       "https://api.jcdecaux.com/vls/v1/stations?contract=lyon&apiKey=74d859ca150a0d64898b62eefd0255bc6f7704fa",
       function(reponse) {
@@ -46,8 +49,13 @@ class customMap {
 
           stationIcon.addEventListener("click", function(e) {
             // Fonction affichant info + formulaire réservation
-              self.mymap.setView([(velo.position.lat), (velo.position.lng+(0.021/(self.mymap.getZoom()-12)))], (self.mymap.getZoom()+1));
-              document.getElementById("mapid").style.flex = "0 0 65%";
+            document.getElementById("mapid").style.flex = "0 0 65%";
+            if ((localStorage.getItem("nomUser") && localStorage.getItem("prenomUser")) !== null ) {
+              document.getElementById("nom").value = localStorage.getItem("nomUser");
+              document.getElementById("prenom").value = localStorage.getItem("prenomUser");
+            }
+            self.mymap.invalidateSize();
+            self.mymap.setView([(velo.position.lat), (velo.position.lng)], (self.mymap.getZoom()+1));
             self.selectedStation = velo;
             document.getElementById("erreur").innerHTML = "";
             formElt.classList.remove("hidden");
@@ -93,11 +101,12 @@ class customMap {
 var mapLyon = new customMap("mapid");
 }
 {/////////////////////////////////////////////////// GESTION DES RESERVATIONS ///////////////////////////////////////////////////
-
 let isReserved = false;
 var timer;
 let reservBtn = document.getElementById("reserverBtn");
 reservBtn.addEventListener("click", function(e) {
+  localStorage.setItem("nomUser",document.getElementById("nom").value);
+  localStorage.setItem("prenomUser",document.getElementById("prenom").value);
 if (isReserved === false)
 {
 	reservation("reserverBtn");
@@ -114,19 +123,25 @@ else if (isReserved === true)
 }
 });
 
+document.getElementById("closeResa").addEventListener("click", function(e){
+  document.getElementById("mapid").style.flex = "0 0 100%";
+});
+
 function reservation(){
+    document.getElementById("infosReservationContainer").classList.add("flex");
+    scrollBottom();
 		if(timer){clearInterval(timer);}
 		let timerMinutes = 20;
-		let timerSecondes = 0;
-		let nomUser = document.getElementById("nom").value;
-		let prenomUser = document.getElementById("prenom").value;
+    let timerSecondes = 0;
 				if (signTest > 30) {
 					document.getElementById("erreur").classList.add("hidden");
 					document.getElementById("signatureDiv").classList.add("hidden");
 					timer = setInterval(timerReserv, 1000);
 					function timerReserv() {
 						if (timerSecondes === 0 && timerMinutes === 0) {
-							clearInterval(timer);
+              clearInterval(timer);
+              isReserved = false;
+              document.getElementById("infosReservation").innerHTML = `<p class="mx-auto"><b>Votre réservation a expiré ! Vous pouvez reserver un Vélo'v à nouveau en cliquant sur une des stations.</b></p>`;
 						} else if (timerSecondes > 0) {
 							timerSecondes--;
 							let formattedTimerSecondes = timerSecondes.toLocaleString(undefined, {
@@ -143,15 +158,19 @@ function reservation(){
 					let formattedTimerSecondes = timerSecondes.toLocaleString(undefined, {minimumIntegerDigits: 2});
 	
 					document.getElementById("erreur").innerHTML = "";
-					document.getElementById("infosReservation").innerHTML = `<p class="mt-3 mx-auto">Votre vélo à bien été réservé au nom de <b> ${nomUser} ${prenomUser} </b> à l'adresse suivante : \r\n
-							<i>${self.selectedStation.address}.</i> Il restera disponible pendant encore <b><span id="minuteur">${timerMinutes}:${formattedTimerSecondes}</span></b> minutes.</p>`;
-					
+					document.getElementById("infosReservation").innerHTML = `<p class="mx-auto">Votre vélo à bien été réservé au nom de <b> ${localStorage.getItem("nomUser")} ${localStorage.getItem("prenomUser")} </b> à l'adresse suivante : \r\n
+              <i>${self.selectedStation.address}.</i> Il restera disponible pendant encore <b><span id="minuteur">${timerMinutes}:${formattedTimerSecondes}</span></b> minutes.</p>`;
+          
 					isReserved = true;
 				} else {
 					document.getElementById("erreur").classList.remove("hidden");
 					document.getElementById("erreur").innerHTML =
 						"Veuillez signer s'il vous plait !";
 				}
+}
+
+function scrollBottom(){
+  window.scrollTo(0,document.body.scrollHeight);
 }
 }
 {/////////////////////////////////////////////////// DIAPORAMA ///////////////////////////////////////////////////
@@ -197,13 +216,13 @@ initEventListeners() {
         self.play = !self.play;
         if(self.play === false){
           clearInterval(self.carousel);
-          self.playPauseBtn.classList.remove("fa-play");
-          self.playPauseBtn.classList.add("fa-pause");
+          self.playPauseBtn.classList.remove("fa-pause");
+          self.playPauseBtn.classList.add("fa-play");
         }
         else if (self.play === true)
         {
-          self.playPauseBtn.classList.remove("fa-pause");
-          self.playPauseBtn.classList.add("fa-play");
+          self.playPauseBtn.classList.remove("fa-play");
+          self.playPauseBtn.classList.add("fa-pause");
           self.carousel = setInterval(function() {self.plusSlides(1);}, 5000);
         }
       });
