@@ -140,6 +140,7 @@ var mapLyon = new customMap("mapid");
 	}
 	
 	function timerReserv() {
+		document.getElementById("minuteur").innerHTML = `${timerMinutes}:${timerSecondes}`;
 		if (timerSecondes === 0 && timerMinutes === 0) {
 			clearInterval(timer);
 			localestorage.setItem("isReserved", "false");
@@ -147,14 +148,11 @@ var mapLyon = new customMap("mapid");
 		} else if (timerSecondes > 0) {
 			timerSecondes--;
 			localStorage.setItem("timerSecondes", timerSecondes);
-			document.getElementById("minuteur").innerHTML = `${timerMinutes}:${timerSecondes}`;
 		} else if (timerSecondes === 0) {
 			timerSecondes = 59;
 			timerMinutes--;
 			localStorage.setItem("timerSecondes", timerSecondes);
 			localStorage.setItem("timerMinutes", timerMinutes);
-			console.log("timerSecondes = " + timerSecondes);
-			document.getElementById("minuteur").innerHTML = `${timerMinutes}:${timerSecondes}`;
 		}
 	}
 
