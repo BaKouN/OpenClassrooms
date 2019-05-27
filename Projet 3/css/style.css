@@ -70,8 +70,6 @@ body {
 }
 
 #infosReservationContainer {
-  display:none;
-  flex-flow:column;
   border: 1px #BC8B2D solid;
   border-radius: 2px;
   box-shadow: 0 14px 28px rgba(0,0,0,0.25);
@@ -83,7 +81,7 @@ body {
 
 #cancelBtn
 {
-  height:fit-content;
+  height:auto;
   width:fit-content;
   margin:auto
 }

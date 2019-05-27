@@ -1,5 +1,3 @@
-localStorage.setItem("name","BAKHOUCHE");
-localStorage.setItem("firstName", "HAROUN");
 console.log(localStorage);
 
 {/////////////////////////////////////////////////// PARAMETRES DE L'API LEAFLET ///////////////////////////////////////////////////
@@ -69,8 +67,11 @@ class customMap {
             document.getElementById("erreur").classList.add("hidden");
           });
 
-          formElt.removeEventListener("submit", testStation);
+					formElt.removeEventListener("submit", testStation);
           var testStation = function(e) {
+						localStorage.setItem("nomUser", document.getElementById("nom").value);
+						localStorage.setItem("prenomUser", document.getElementById("prenom").value);
+						localStorage.setItem("adresseStation",self.selectedStation.address);
             e.preventDefault();
             if (
               self.selectedStation.available_bikes > 0 &&
@@ -100,79 +101,94 @@ class customMap {
 
 var mapLyon = new customMap("mapid");
 }
-{/////////////////////////////////////////////////// GESTION DES RESERVATIONS ///////////////////////////////////////////////////
-let isReserved = false;
-var timer;
-let reservBtn = document.getElementById("reserverBtn");
-reservBtn.addEventListener("click", function(e) {
-  localStorage.setItem("nomUser",document.getElementById("nom").value);
-  localStorage.setItem("prenomUser",document.getElementById("prenom").value);
-if (isReserved === false)
-{
-	reservation("reserverBtn");
-}
-else if (isReserved === true)
-{
-	let dataToggleAttr = document.createAttribute("data-toggle");
-	dataToggleAttr.value = "modal";
-	reservBtn.setAttributeNode(dataToggleAttr);
-	document.getElementById("newReservationBtn").addEventListener("click", function(e){
-		document.getElementById("infosReservation").innerHTML="";
-		reservation("newReservationBtn");
+/////////////////////////////////////////////////// GESTION DES RESERVATIONS ///////////////////////////////////////////////////
+	var timer;
+	if ((localStorage.getItem("timerSecondes") === null) || (localStorage.getItem("timerMinutes") === null)){
+		var timerMinutes = 20;
+		var timerSecondes = 0;
+	} else 
+	{
+		var timerMinutes = localStorage.getItem("timerMinutes");
+		var timerSecondes = localStorage.getItem("timerSecondes");
+	}
+	let reservBtn = document.getElementById("reserverBtn");
+  localStorage.setItem("resaInnerHtml", "<p class=\"mx-auto\">Votre vélo à bien été réservé au nom de <b> <span id=\"nomUser\"></span> <span id=\"prenomUser\"></span></b> à l\'adresse suivante : \r\n <i><span id=\"adresseStation\"></span></i> Il restera disponible pendant encore <b><span id=\"minuteur\"></span></b> minutes.</p>");
+  if (localStorage.getItem("isReserved") === null) {localStorage.setItem("isReserved", "false");}
+	
+
+	if (localStorage.getItem("isReserved") === "false")	{
+		reservBtn.addEventListener("click", function(e) {reservation()});
+	}	else if	(localStorage.getItem("isReserved") === "true") {
+		fillResaInfos();
+		initModal();
+		timer = setInterval(function(){	timerReserv()	},1000);
+		document.getElementById("newReservationBtn").addEventListener("click", function(e) {
+		reservation();
 	});
-}
-});
+	}
+	
+	function fillResaInfos ()
+	{
+		document.getElementById("infosReservation").innerHTML = `${localStorage.getItem("resaInnerHtml")}`;
+		document.getElementById("prenomUser").innerHTML = localStorage.getItem("prenomUser");
+		document.getElementById("nomUser").innerHTML = localStorage.getItem("nomUser");
+		document.getElementById("adresseStation").innerHTML = localStorage.getItem("adresseStation");
+		if ((localStorage.getItem("timerSecondes") !== null) && (localStorage.getItem("timerMinutes") !== null)){
+			var timerMinutes = localStorage.getItem("timerMinutes");
+			var timerSecondes = localStorage.getItem("timerSecondes");
+		}
+	}
+	
+	function timerReserv() {
+		if (timerSecondes === 0 && timerMinutes === 0) {
+			clearInterval(timer);
+			localestorage.setItem("isReserved", "false");
+			document.getElementById("infosReservation").innerHTML = `<p class="mx-auto"><b>Votre réservation a expiré ! Vous pouvez reserver un Vélo'v à nouveau en cliquant sur une des stations.</b></p>`;
+		} else if (timerSecondes > 0) {
+			timerSecondes--;
+			localStorage.setItem("timerSecondes", timerSecondes);
+			document.getElementById("minuteur").innerHTML = `${timerMinutes}:${timerSecondes}`;
+		} else if (timerSecondes === 0) {
+			timerSecondes = 59;
+			timerMinutes--;
+			localStorage.setItem("timerSecondes", timerSecondes);
+			localStorage.setItem("timerMinutes", timerMinutes);
+			console.log("timerSecondes = " + timerSecondes);
+			document.getElementById("minuteur").innerHTML = `${timerMinutes}:${timerSecondes}`;
+		}
+	}
 
-document.getElementById("closeResa").addEventListener("click", function(e){
+  function reservation() {
+		timerMinutes = 20;
+		timerSecondes = 0;
+		if(timer){clearInterval(timer)};
+		if (signTest > 30) {
+			document.getElementById("erreur").classList.add("hidden");
+			document.getElementById("signatureDiv").classList.add("hidden");
+			timer = setInterval(timerReserv, 1000);
+			document.getElementById("erreur").innerHTML = "";
+			fillResaInfos();
+			localStorage.setItem("isReserved", "true");
+		} else {
+			document.getElementById("erreur").classList.remove("hidden");
+			document.getElementById("erreur").innerHTML =
+				"Veuillez signer s'il vous plait !";
+		}
+  }
+  
+  function scrollBottom() {
+    window.scrollTo(0, document.body.scrollHeight);
+	}
+	
+	function initModal() {
+		let dataToggleAttr = document.createAttribute("data-toggle");
+		dataToggleAttr.value = "modal"; //modal d'avertissement 
+		reservBtn.setAttributeNode(dataToggleAttr);
+	}
+
+	document.getElementById("closeResa").addEventListener("click", function(e) {
   document.getElementById("mapid").style.flex = "0 0 100%";
-});
-
-function reservation(){
-    document.getElementById("infosReservationContainer").classList.add("flex");
-    scrollBottom();
-		if(timer){clearInterval(timer);}
-		let timerMinutes = 20;
-    let timerSecondes = 0;
-				if (signTest > 30) {
-					document.getElementById("erreur").classList.add("hidden");
-					document.getElementById("signatureDiv").classList.add("hidden");
-					timer = setInterval(timerReserv, 1000);
-					function timerReserv() {
-						if (timerSecondes === 0 && timerMinutes === 0) {
-              clearInterval(timer);
-              isReserved = false;
-              document.getElementById("infosReservation").innerHTML = `<p class="mx-auto"><b>Votre réservation a expiré ! Vous pouvez reserver un Vélo'v à nouveau en cliquant sur une des stations.</b></p>`;
-						} else if (timerSecondes > 0) {
-							timerSecondes--;
-							let formattedTimerSecondes = timerSecondes.toLocaleString(undefined, {
-								minimumIntegerDigits: 2
-							});
-							document.getElementById("minuteur").innerHTML = `${timerMinutes}:${formattedTimerSecondes}`;
-						} else if (timerSecondes === 0) {
-							timerSecondes = 59;
-							timerMinutes--;
-							document.getElementById("minuteur").innerHTML = `${timerMinutes}:${timerSecondes}`;
-						}
-					}
-	
-					let formattedTimerSecondes = timerSecondes.toLocaleString(undefined, {minimumIntegerDigits: 2});
-	
-					document.getElementById("erreur").innerHTML = "";
-					document.getElementById("infosReservation").innerHTML = `<p class="mx-auto">Votre vélo à bien été réservé au nom de <b> ${localStorage.getItem("nomUser")} ${localStorage.getItem("prenomUser")} </b> à l'adresse suivante : \r\n
-              <i>${self.selectedStation.address}.</i> Il restera disponible pendant encore <b><span id="minuteur">${timerMinutes}:${formattedTimerSecondes}</span></b> minutes.</p>`;
-          
-					isReserved = true;
-				} else {
-					document.getElementById("erreur").classList.remove("hidden");
-					document.getElementById("erreur").innerHTML =
-						"Veuillez signer s'il vous plait !";
-				}
-}
-
-function scrollBottom(){
-  window.scrollTo(0,document.body.scrollHeight);
-}
-}
+  });
 {/////////////////////////////////////////////////// DIAPORAMA ///////////////////////////////////////////////////
 class diapo {
   constructor(containerElt, bouttonPlayElt){
