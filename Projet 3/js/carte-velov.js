@@ -16,7 +16,7 @@ class customMap {
 
     this.velovIcon = L.Icon.extend({
       options: {
-        shadowUrl: "../images/ombre.png",
+        shadowUrl: "images/ombre.png",
         iconSize: [30, 30],
         shadowSize: [30, 30],
         iconAnchor: [15, 28],
@@ -25,7 +25,7 @@ class customMap {
       }
     });
     
-    this.redIcon = new this.velovIcon({iconUrl: "../images/velovRouge.png"});
+    this.redIcon = new this.velovIcon({iconUrl: "images/velovRouge.png"});
 
     this.cluster = L.markerClusterGroup();
     this.selectedStation;
