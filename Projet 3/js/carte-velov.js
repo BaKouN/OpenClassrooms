@@ -1,5 +1,3 @@
-console.log(localStorage);
-
 {/////////////////////////////////////////////////// PARAMETRES DE L'API LEAFLET ///////////////////////////////////////////////////
 
 // https://api.jcdecaux.com/vls/v1/stations?contract=lyon&apiKey=74d859ca150a0d64898b62eefd0255bc6f7704fa
@@ -117,7 +115,7 @@ var mapLyon = new customMap("mapid");
 	
 
 	if (localStorage.getItem("isReserved") === "false")	{
-		reservBtn.addEventListener("click", function(e) {reservation()});
+    reservBtn.addEventListener("click", function(e) {reservation()});
 	}	else if	(localStorage.getItem("isReserved") === "true") {
 		fillResaInfos();
 		initModal();
@@ -164,9 +162,10 @@ var mapLyon = new customMap("mapid");
 			document.getElementById("erreur").classList.add("hidden");
 			document.getElementById("signatureDiv").classList.add("hidden");
 			timer = setInterval(timerReserv, 1000);
-			document.getElementById("erreur").innerHTML = "";
+      document.getElementById("erreur").innerHTML = "";
 			fillResaInfos();
-			localStorage.setItem("isReserved", "true");
+      localStorage.setItem("isReserved", "true");
+      setTimeout(initModal,1000);
 		} else {
 			document.getElementById("erreur").classList.remove("hidden");
 			document.getElementById("erreur").innerHTML =
